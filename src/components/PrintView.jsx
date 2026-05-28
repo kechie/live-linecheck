@@ -94,7 +94,7 @@ export default function PrintView({
         {/* SECTION 3: CREW */}
         <div>
           <h2 className="text-xl font-bold uppercase tracking-wider border-b border-gray-400 mb-3">
-            3. Production Crew
+            3. Live Production Crew
           </h2>
           <div className="grid grid-cols-2 gap-4">
             {staff.map((member) => (
