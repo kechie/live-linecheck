@@ -484,10 +484,12 @@ export default function App() {
       <header className="mb-6 border-b border-zinc-800 pb-4 flex flex-col md:flex-row justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black uppercase text-red-500">
-            CCF Laoag Outreach Live Production and Setlist Management
+            A1 Master Console
           </h1>
           <p className="text-sm text-zinc-400">
-            Drag nodes to adjust layouts. Data saves automatically per day.
+            Manage show assets below.{" "}
+            <span className="text-amber-400 font-bold">Drag nodes</span> to
+            adjust layouts. Data saves automatically per day.
           </p>
         </div>
 
