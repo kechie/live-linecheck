@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "./Footer";
 
 export default function PrintView({
   selectedDateStr,
@@ -229,6 +230,7 @@ export default function PrintView({
               )}
             </tbody>
           </table>
+          <Footer />
         </div>
       </div>
     </div>

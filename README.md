@@ -302,3 +302,5 @@ For issues, feature requests, or contributions, please open an issue on the GitH
 ---
 
 **Live LineCheck** - Simplifying live event production management, one show at a time.
+
+Built project can be found on [amian.tech](https://ccf-set.amian.tech/).
