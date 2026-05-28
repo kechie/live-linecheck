@@ -1,0 +1,108 @@
+{
+  "channels": [
+    {
+      "id": 1,
+      "name": "Kristy Bel (Lead)",
+      "role": "Lead Vocal",
+      "mic": "Beta 58",
+      "freq": "470.200",
+      "pack": "Red A",
+      "defaultLeft": "78.19566625750136%",
+      "defaultTop": "75.53542564655172%"
+    },
+    {
+      "id": 2,
+      "name": "Reo (BGV 1)",
+      "role": "Backup 1",
+      "mic": "e945",
+      "freq": "471.550",
+      "pack": "Blue B",
+      "defaultLeft": "51.53684192580469%",
+      "defaultTop": "80.64924568965517%"
+    },
+    {
+      "id": 3,
+      "name": "Alyssa (BGV 2)",
+      "role": "Backup 2",
+      "mic": "SM58",
+      "freq": "Wired",
+      "pack": "N/A",
+      "defaultLeft": "20%",
+      "defaultTop": "75%"
+    }
+  ],
+  "staff": [
+    {
+      "id": 1,
+      "name": "Jun Jun",
+      "role": "Stage Manager",
+      "station": "Stage Right Deck",
+      "comms": "Ch 1 (Master)"
+    },
+    {
+      "id": 2,
+      "name": "Jay S.",
+      "role": "A1 / PC",
+      "station": "Front of House (FOH)",
+      "comms": "Ch 2 (Audio)"
+    }
+  ],
+  "instruments": [
+    {
+      "id": 1,
+      "name": "Drum Kit",
+      "player": "Gian",
+      "type": "Mics (K/S/H/T/T)",
+      "monitor": "Mix 4 (Drums)",
+      "defaultLeft": "40.185147299509005%",
+      "defaultTop": "18.533809267241377%"
+    },
+    {
+      "id": 2,
+      "name": "Electric Guitar",
+      "player": "Hemdan C.",
+      "type": "Stereo DI",
+      "monitor": "Mix 5 (Keys)",
+      "defaultLeft": "42.711402073104196%",
+      "defaultTop": "36.194100215517246%"
+    }
+  ],
+  "setlist": [
+    {
+      "id": 1,
+      "number": "1.0",
+      "title": "Worship",
+      "duration": "4:20",
+      "audioLink": "https://spotify.com",
+      "chartLink": "https://ultimate-guitar.com",
+      "notes": "Lead - Kristy Bel"
+    },
+    {
+      "id": 2,
+      "number": "2.0",
+      "title": "Anchor of our lives",
+      "duration": "3:15",
+      "audioLink": "https://youtube.com",
+      "chartLink": "https://tabs.com",
+      "notes": "Lead - Reo"
+    },
+    {
+      "id": 2,
+      "number": "3.0",
+      "title": "Reliably True",
+      "duration": "5:00",
+      "audioLink": "https://youtube.com",
+      "chartLink": "https://tabs.com",
+      "notes": "Lead - Alyssa"
+    },
+    {
+      "id": 2,
+      "number": "4.0",
+      "title": "Trust in God",
+      "duration": "5:15",
+      "audioLink": "https://youtube.com",
+      "chartLink": "https://tabs.com",
+      "notes": "Lead - Reo"
+    }
+  ]
+}
