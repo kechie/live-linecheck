@@ -371,10 +371,13 @@ export default function App() {
   const submitChannel = (e) => {
     e.preventDefault();
     if (!newName) return;
+    // FIXED: Finds the highest existing CH number and adds 1
+    const nextId =
+      channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
     setChannels([
       ...channels,
       {
-        id: Date.now(),
+        id: nextId,
         name: newName,
         role: "Performer",
         mic: "Handheld",
@@ -391,10 +394,12 @@ export default function App() {
   const submitStaff = (e) => {
     e.preventDefault();
     if (!staffName) return;
+    const nextId =
+      channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
     setStaff([
       ...staff,
       {
-        id: Date.now(),
+        id: nextId,
         name: staffName,
         role: staffRole,
         station: staffStation,
@@ -408,10 +413,12 @@ export default function App() {
   const submitInst = (e) => {
     e.preventDefault();
     if (!instName) return;
+    const nextId =
+      channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
     setInstruments([
       ...instruments,
       {
-        id: Date.now(),
+        id: nextId,
         name: instName,
         player: instPlayer,
         type: instType,
@@ -427,10 +434,13 @@ export default function App() {
   const submitSong = (e) => {
     e.preventDefault();
     if (!songTitle) return;
+    const nextId =
+      channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
     setSetlist([
       ...setlist,
+
       {
-        id: Date.now(),
+        id: nextId,
         number: songNum,
         title: songTitle,
         duration: songDuration,
