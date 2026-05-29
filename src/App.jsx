@@ -9,116 +9,6 @@ import SetlistTable from "./components/SetlistTable";
 import EditModal from "./components/EditModal";
 import PrintView from "./components/PrintView";
 
-const INITIAL_CHANNELS = [
-  {
-    id: 1,
-    name: "Kristy Bel (Lead)",
-    role: "Lead Vocal",
-    mic: "Beta 58",
-    freq: "470.200",
-    pack: "Red A",
-    defaultLeft: "45%",
-    defaultTop: "80%",
-  },
-  {
-    id: 2,
-    name: "Reo (BGV 1)",
-    role: "Backup 1",
-    mic: "e945",
-    freq: "471.550",
-    pack: "Blue B",
-    defaultLeft: "70%",
-    defaultTop: "75%",
-  },
-  {
-    id: 3,
-    name: "Alyssa (BGV 2)",
-    role: "Backup 2",
-    mic: "SM58",
-    freq: "Wired",
-    pack: "N/A",
-    defaultLeft: "20%",
-    defaultTop: "75%",
-  },
-];
-
-const INITIAL_STAFF = [
-  {
-    id: 1,
-    name: "Jun Jun",
-    role: "Stage Manager",
-    station: "Stage Right Deck",
-    comms: "Ch 1 (Master)",
-  },
-  {
-    id: 2,
-    name: "Jay S.",
-    role: "A1 / PC",
-    station: "Front of House (FOH)",
-    comms: "Ch 2 (Audio)",
-  },
-];
-
-const INITIAL_INSTRUMENTS = [
-  {
-    id: 1,
-    name: "Drum Kit",
-    player: "Gian",
-    type: "Mics (K/S/H/T/T)",
-    monitor: "Mix 4 (Drums)",
-    defaultLeft: "50%",
-    defaultTop: "20%",
-  },
-  {
-    id: 2,
-    name: "Electric Guitar",
-    player: "Hemdan C.",
-    type: "Stereo DI",
-    monitor: "Mix 5 (Keys)",
-    defaultLeft: "80%",
-    defaultTop: "35%",
-  },
-];
-
-const INITIAL_SETLIST = [
-  {
-    id: 1,
-    number: "1.0",
-    title: "Worship",
-    duration: "4:20",
-    audioLink: "https://spotify.com",
-    chartLink: "https://ultimate-guitar.com",
-    notes: "Lead - Kristy Bel",
-  },
-  {
-    id: 2,
-    number: "2.0",
-    title: "Anchor of our lives",
-    duration: "3:15",
-    audioLink: "https://youtube.com",
-    chartLink: "https://tabs.com",
-    notes: "Lead - Reo",
-  },
-  {
-    id: 2,
-    number: "3.0",
-    title: "Reliably True",
-    duration: "5:00",
-    audioLink: "https://youtube.com",
-    chartLink: "https://tabs.com",
-    notes: "Lead - Alyssa",
-  },
-  {
-    id: 2,
-    number: "4.0",
-    title: "Trust in God",
-    duration: "5:15",
-    audioLink: "https://youtube.com",
-    chartLink: "https://tabs.com",
-    notes: "Lead - Reo",
-  },
-];
-
 // --- LOCAL STORAGE HELPER FUNCTION ---
 const loadSavedData = (storageKey, fallbackData) => {
   try {
@@ -139,18 +29,23 @@ export default function App() {
   const [selectedDateStr, setSelectedDateStr] = useState(initialDate);
 
   // Global State (Dynamically initialized using the current date in the storage key!)
-  const [channels, setChannels] = useState(() =>
-    loadSavedData(`stageTech_channels_${initialDate}`, INITIAL_CHANNELS),
-  );
-  const [staff, setStaff] = useState(() =>
-    loadSavedData(`stageTech_staff_${initialDate}`, INITIAL_STAFF),
-  );
-  const [instruments, setInstruments] = useState(() =>
-    loadSavedData(`stageTech_instruments_${initialDate}`, INITIAL_INSTRUMENTS),
-  );
-  const [setlist, setSetlist] = useState(() =>
-    loadSavedData(`stageTech_setlist_${initialDate}`, INITIAL_SETLIST),
-  );
+  // const [channels, setChannels] = useState(() =>
+  //   loadSavedData(`stageTech_channels_${initialDate}`, INITIAL_CHANNELS),
+  // );
+  // const [staff, setStaff] = useState(() =>
+  //   loadSavedData(`stageTech_staff_${initialDate}`, INITIAL_STAFF),
+  // );
+  // const [instruments, setInstruments] = useState(() =>
+  //   loadSavedData(`stageTech_instruments_${initialDate}`, INITIAL_INSTRUMENTS),
+  // );
+  // const [setlist, setSetlist] = useState(() =>
+  //   loadSavedData(`stageTech_setlist_${initialDate}`, INITIAL_SETLIST),
+  // );
+  // Global States start clean and empty
+  const [channels, setChannels] = useState([]);
+  const [staff, setStaff] = useState([]);
+  const [instruments, setInstruments] = useState([]);
+  const [setlist, setSetlist] = useState([]);
 
   const stageRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -177,48 +72,102 @@ export default function App() {
   const [songAudio, setSongAudio] = useState("");
   const [songChart, setSongChart] = useState("");
   const [songNotes, setSongNotes] = useState("");
-
-  // --- LOCAL STORAGE "WATCHERS" (useEffect) ---
-  // Every time you change data OR change the date, these update the correct day's memory box.
+  // --- COMPONENT BOOT / DATE SWITCH LIFECYCLE ---
   useEffect(() => {
-    localStorage.setItem(
+    const savedChannels = localStorage.getItem(
       `stageTech_channels_${selectedDateStr}`,
-      JSON.stringify(channels),
     );
-  }, [channels, selectedDateStr]);
-  useEffect(() => {
-    localStorage.setItem(
+    const savedStaff = localStorage.getItem(
       `stageTech_staff_${selectedDateStr}`,
-      JSON.stringify(staff),
     );
-  }, [staff, selectedDateStr]);
-  useEffect(() => {
-    localStorage.setItem(
+    const savedInstruments = localStorage.getItem(
       `stageTech_instruments_${selectedDateStr}`,
-      JSON.stringify(instruments),
     );
-  }, [instruments, selectedDateStr]);
-  useEffect(() => {
-    localStorage.setItem(
+    const savedSetlist = localStorage.getItem(
       `stageTech_setlist_${selectedDateStr}`,
-      JSON.stringify(setlist),
     );
+
+    // If ANY data exists in LocalStorage for this date, load it instantly
+    if (savedChannels || savedStaff || savedInstruments || savedSetlist) {
+      setChannels(savedChannels ? JSON.parse(savedChannels) : []);
+      setStaff(savedStaff ? JSON.parse(savedStaff) : []);
+      setInstruments(savedInstruments ? JSON.parse(savedInstruments) : []);
+      setSetlist(savedSetlist ? JSON.parse(savedSetlist) : []);
+    } else {
+      // If today has completely clean memory, fetch our baseline template JSON file
+      fetch("/init_data.json")
+        .then((res) => res.json())
+        .then((fallback) => {
+          setChannels(fallback.channels || []);
+          setStaff(fallback.staff || []);
+          setInstruments(fallback.instruments || []);
+          setSetlist(fallback.setlist || []);
+        })
+        .catch((err) =>
+          console.error("Error seeding initial template manifest map:", err),
+        );
+    }
+  }, [selectedDateStr]);
+  // --- LOCAL STORAGE "WATCHERS" (useEffect) ---
+  // FIXED: Added length guards so empty states don't overwrite memory on reset
+  useEffect(() => {
+    if (channels.length > 0) {
+      localStorage.setItem(
+        `stageTech_channels_${selectedDateStr}`,
+        JSON.stringify(channels),
+      );
+    }
+  }, [channels, selectedDateStr]);
+
+  useEffect(() => {
+    if (staff.length > 0) {
+      localStorage.setItem(
+        `stageTech_staff_${selectedDateStr}`,
+        JSON.stringify(staff),
+      );
+    }
+  }, [staff, selectedDateStr]);
+
+  useEffect(() => {
+    if (instruments.length > 0) {
+      localStorage.setItem(
+        `stageTech_instruments_${selectedDateStr}`,
+        JSON.stringify(instruments),
+      );
+    }
+  }, [instruments, selectedDateStr]);
+
+  useEffect(() => {
+    if (setlist.length > 0) {
+      localStorage.setItem(
+        `stageTech_setlist_${selectedDateStr}`,
+        JSON.stringify(setlist),
+      );
+    }
   }, [setlist, selectedDateStr]);
 
   // --- DATE SWITCHING LOGIC ---
+  // const loadDateData = (newDate) => {
+  //   setSelectedDateStr(newDate);
+  //   // When the date changes, instantly pull that day's data from memory (or load templates)
+  //   setChannels(
+  //     loadSavedData(`stageTech_channels_${newDate}`, INITIAL_CHANNELS),
+  //   );
+  //   setStaff(loadSavedData(`stageTech_staff_${newDate}`, INITIAL_STAFF));
+  //   setInstruments(
+  //     loadSavedData(`stageTech_instruments_${newDate}`, INITIAL_INSTRUMENTS),
+  //   );
+  //   setSetlist(loadSavedData(`stageTech_setlist_${newDate}`, INITIAL_SETLIST));
+  // };
+  // --- DATE SWITCHER CORRECTION ---
   const loadDateData = (newDate) => {
     setSelectedDateStr(newDate);
-    // When the date changes, instantly pull that day's data from memory (or load templates)
-    setChannels(
-      loadSavedData(`stageTech_channels_${newDate}`, INITIAL_CHANNELS),
-    );
-    setStaff(loadSavedData(`stageTech_staff_${newDate}`, INITIAL_STAFF));
-    setInstruments(
-      loadSavedData(`stageTech_instruments_${newDate}`, INITIAL_INSTRUMENTS),
-    );
-    setSetlist(loadSavedData(`stageTech_setlist_${newDate}`, INITIAL_SETLIST));
+    // State arrays get wiped clean momentarily; the primary lifecycle watcher hook above handles re-seeding
+    setChannels([]);
+    setStaff([]);
+    setInstruments([]);
+    setSetlist([]);
   };
-
   // --- EXPORT / IMPORT LOGIC ---
   const handleExportShow = () => {
     const showData = { channels, staff, instruments, setlist };
@@ -279,16 +228,19 @@ export default function App() {
         `Are you sure you want to wipe all data for ${selectedDateStr}? This will reset today back to the defaults.`,
       )
     ) {
-      setChannels(INITIAL_CHANNELS);
-      setStaff(INITIAL_STAFF);
-      setInstruments(INITIAL_INSTRUMENTS);
-      setSetlist(INITIAL_SETLIST);
+      // setChannels(INITIAL_CHANNELS);
+      // setStaff(INITIAL_STAFF);
+      // setInstruments(INITIAL_INSTRUMENTS);
+      // setSetlist(INITIAL_SETLIST);
 
       // Clear out the specific keys for this day from the browser
       localStorage.removeItem(`stageTech_channels_${selectedDateStr}`);
       localStorage.removeItem(`stageTech_staff_${selectedDateStr}`);
       localStorage.removeItem(`stageTech_instruments_${selectedDateStr}`);
       localStorage.removeItem(`stageTech_setlist_${selectedDateStr}`);
+
+      // Force reload the dashboard's storage cycle lifecycle hooks
+      loadDateData(selectedDateStr);
     }
   };
 
@@ -367,11 +319,12 @@ export default function App() {
     setEditingItem(null);
   };
 
-  // Add Handlers
+  // ==========================================
+  // FIXED ADD HANDLERS
+  // ==========================================
   const submitChannel = (e) => {
     e.preventDefault();
-    if (!newName) return;
-    // FIXED: Finds the highest existing CH number and adds 1
+    if (!newName.trim()) return;
     const nextId =
       channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
     setChannels([
@@ -391,38 +344,44 @@ export default function App() {
     setNewFreq("");
     setNewPack("");
   };
+
   const submitStaff = (e) => {
     e.preventDefault();
-    if (!staffName) return;
+    if (!staffName.trim()) return;
+    // FIXED: Maps from 'staff' instead of 'channels'
     const nextId =
-      channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
+      staff.length > 0 ? Math.max(...staff.map((s) => s.id)) + 1 : 1;
     setStaff([
       ...staff,
       {
         id: nextId,
         name: staffName,
         role: staffRole,
-        station: staffStation,
-        comms: staffComms,
+        station: staffStation || "TBD",
+        comms: staffComms || "Ch 1",
       },
     ]);
     setStaffName("");
     setStaffStation("");
     setStaffComms("");
   };
+
   const submitInst = (e) => {
     e.preventDefault();
-    if (!instName) return;
+    if (!instName.trim()) return;
+    // FIXED: Maps from 'instruments' instead of 'channels'
     const nextId =
-      channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
+      instruments.length > 0
+        ? Math.max(...instruments.map((i) => i.id)) + 1
+        : 1;
     setInstruments([
       ...instruments,
       {
         id: nextId,
         name: instName,
-        player: instPlayer,
+        player: instPlayer || "Sessionist",
         type: instType,
-        monitor: instMon,
+        monitor: instMon || "None",
         defaultLeft: "50%",
         defaultTop: "25%",
       },
@@ -431,19 +390,20 @@ export default function App() {
     setInstPlayer("");
     setInstMon("");
   };
+
   const submitSong = (e) => {
     e.preventDefault();
-    if (!songTitle) return;
+    if (!songTitle.trim()) return;
+    // FIXED: Maps from 'setlist' instead of 'channels'
     const nextId =
-      channels.length > 0 ? Math.max(...channels.map((c) => c.id)) + 1 : 1;
+      setlist.length > 0 ? Math.max(...setlist.map((s) => s.id)) + 1 : 1;
     setSetlist([
       ...setlist,
-
       {
         id: nextId,
-        number: songNum,
+        number: songNum || `${nextId}.0`,
         title: songTitle,
-        duration: songDuration,
+        duration: songDuration || "--:--",
         audioLink: songAudio,
         chartLink: songChart,
         notes: songNotes,

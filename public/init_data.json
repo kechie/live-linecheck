@@ -7,8 +7,8 @@
       "mic": "Beta 58",
       "freq": "470.200",
       "pack": "Red A",
-      "defaultLeft": "78.19566625750136%",
-      "defaultTop": "75.53542564655172%"
+      "defaultLeft": "36.52%",
+      "defaultTop": "83.36%"
     },
     {
       "id": 2,
@@ -17,8 +17,8 @@
       "mic": "e945",
       "freq": "471.550",
       "pack": "Blue B",
-      "defaultLeft": "51.53684192580469%",
-      "defaultTop": "80.64924568965517%"
+      "defaultLeft": "71.29%",
+      "defaultTop": "74.40%"
     },
     {
       "id": 3,
@@ -27,38 +27,38 @@
       "mic": "SM58",
       "freq": "Wired",
       "pack": "N/A",
-      "defaultLeft": "20%",
+      "defaultLeft": "22.46%",
       "defaultTop": "75%"
     },
     {
       "id": 4,
-      "name": "Flo (BGV 3)",
-      "role": "Backup 2",
-      "mic": "SM58",
-      "freq": "Wired",
-      "pack": "N/A",
-      "defaultLeft": "20%",
-      "defaultTop": "75%"
+      "name": "Flo",
+      "role": "Performer",
+      "mic": "Handheld",
+      "freq": "TBD",
+      "pack": "None",
+      "defaultLeft": "85.02%",
+      "defaultTop": "65.88%"
     },
     {
       "id": 5,
-      "name": "Frank A. (BGV 4)",
-      "role": "Backup 4",
-      "mic": "Imix",
-      "freq": "Wired",
-      "pack": "N/A",
-      "defaultLeft": "20%",
-      "defaultTop": "75%"
+      "name": "Frank A.",
+      "role": "Performer",
+      "mic": "Handheld",
+      "freq": "650.00",
+      "pack": "5",
+      "defaultLeft": "10.98%",
+      "defaultTop": "62.79%"
     },
     {
       "id": 6,
-      "name": "Alyssa (BGV 2)",
-      "role": "Backup 5",
-      "mic": "Imix",
-      "freq": "Wired",
-      "pack": "N/A",
-      "defaultLeft": "20%",
-      "defaultTop": "75%"
+      "name": "Myra E",
+      "role": "Performer",
+      "mic": "Handheld",
+      "freq": "788",
+      "pack": "C",
+      "defaultLeft": "56.38%",
+      "defaultTop": "83.69%"
     }
   ],
   "staff": [
@@ -67,14 +67,14 @@
       "name": "Jun Jun",
       "role": "Stage Manager",
       "station": "Stage Right Deck",
-      "comms": "Ch 1 (Master)"
+      "comms": "Ch 2"
     },
     {
       "id": 2,
-      "name": "Jay S.",
-      "role": "A1 / PC",
+      "name": "Kleb",
+      "role": "A2 Deck Audio",
       "station": "Front of House (FOH)",
-      "comms": "Ch 2 (Audio)"
+      "comms": "Ch 2"
     }
   ],
   "instruments": [
@@ -84,8 +84,8 @@
       "player": "Gian",
       "type": "Mics (K/S/H/T/T)",
       "monitor": "Mix 4 (Drums)",
-      "defaultLeft": "40.185147299509005%",
-      "defaultTop": "18.533809267241377%"
+      "defaultLeft": "12.204207583196945%",
+      "defaultTop": "13.479256465517242%"
     },
     {
       "id": 2,
@@ -93,8 +93,26 @@
       "player": "Hemdan C.",
       "type": "Stereo DI",
       "monitor": "Mix 5 (Keys)",
-      "defaultLeft": "42.711402073104196%",
-      "defaultTop": "36.194100215517246%"
+      "defaultLeft": "74.44089266230222%",
+      "defaultTop": "15.712553879310347%"
+    },
+    {
+      "id": 3,
+      "name": "Keys",
+      "player": "Paul",
+      "type": "DI Box",
+      "monitor": "None",
+      "defaultLeft": "26.045502591380252%",
+      "defaultTop": "13.774919181034484%"
+    },
+    {
+      "id": 4,
+      "name": "Bass",
+      "player": "kechiE",
+      "type": "DI Box",
+      "monitor": "None",
+      "defaultLeft": "87.86228177850518%",
+      "defaultTop": "15.59065193965517%"
     }
   ],
   "setlist": [
@@ -117,7 +135,7 @@
       "notes": "Lead - Reo"
     },
     {
-      "id": 2,
+      "id": 3,
       "number": "3.0",
       "title": "Reliably True",
       "duration": "5:00",
@@ -126,7 +144,7 @@
       "notes": "Lead - Alyssa"
     },
     {
-      "id": 2,
+      "id": 4,
       "number": "4.0",
       "title": "Trust in God",
       "duration": "5:15",
