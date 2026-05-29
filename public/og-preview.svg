@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#09090b" />
+  
+  <g opacity="0.15">
+    <path d="M 100,50 L 1100,50 L 1150,550 L 50,550 Z" fill="none" stroke="#ffff" stroke-width="2" />
+    <path d="M 200,50 L 150,550" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M 400,50 L 400,550" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M 600,50 L 600,550" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M 800,50 L 800,550" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M 1000,50 L 1050,550" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M 87,175 L 1112,175" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M 75,300 L 1125,300" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M 62,425 L 1137,425" stroke="#ffff" stroke-width="1" stroke-dasharray="5,5" />
+  </g>
+  
+  <defs>
+    <radialGradient id="redGlow" cx="10%" cy="90%" r="60%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#09090b" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#redGlow)" />
+
+  <rect x="540" y="120" width="120" height="50" rx="6" fill="#27272a" stroke="#94a3b8" stroke-width="2" />
+  <text x="600" y="150" fill="#f4f4f5" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">🥁 Drum Kit</text>
+  
+  <rect x="420" y="420" width="140" height="50" rx="6" fill="#27272a" stroke="#ef4444" stroke-width="2" />
+  <text x="490" y="445" fill="#f4f4f5" font-family="sans-serif" font-weight="bold" font-size="13" text-anchor="middle">CH 1: Kristy Bel</text>
+  <text x="490" y="460" fill="#ef4444" font-family="monospace" font-size="10" text-anchor="middle">470.200 MHz</text>
+
+  <rect x="640" y="380" width="140" height="50" rx="6" fill="#27272a" stroke="#ef4444" stroke-width="2" />
+  <text x="710" y="405" fill="#f4f4f5" font-family="sans-serif" font-weight="bold" font-size="13" text-anchor="middle">CH 2: Reo (BGV)</text>
+  <text x="710" y="420" fill="#ef4444" font-family="monospace" font-size="10" text-anchor="middle">471.550 MHz</text>
+
+  <rect x="980" y="520" width="150" height="40" rx="4" fill="#1e3a8a" fill-opacity="0.4" stroke="#3b82f6" stroke-width="1" />
+  <text x="1055" y="545" fill="#93c5fd" font-family="sans-serif" font-weight="bold" font-size="12" text-anchor="middle">⚙️ SM: Jun Jun</text>
+
+  <g transform="translate(80, 100)">
+    <text x="0" y="40" fill="#ef4444" font-family="sans-serif" font-weight="900" font-size="64" letter-spacing="2">LIVELINECHECK</text>
+    <text x="545" y="40" fill="#a1a1aa" font-family="sans-serif" font-weight="300" font-size="64" letter-spacing="2">CONSOLE</text>
+    <text x="5" y="85" fill="#a1a1aa" font-family="sans-serif" font-weight="500" font-size="20" letter-spacing="1">Interactive Stage Plots &amp; Audio Input Manifest Engine</text>
+  </g>
+
+  <g transform="translate(85, 545)" font-family="monospace" font-size="13" fill="#71717a" letter-spacing="1">
+    <text x="0" y="0">⚡ OFFLINE LOCAL_STORAGE CORE</text>
+    <text x="320" y="0">|</text>
+    <text x="350" y="0">🖨️ NATIVE LANDSCAPE PDF PRINTING</text>
+    <text x="715" y="0">|</text>
+    <text x="745" y="0">🌐 POWERED BY AMIAN.TECH</text>
+  </g>
+</svg>

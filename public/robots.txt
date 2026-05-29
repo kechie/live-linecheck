@@ -1,0 +1,11 @@
+# https://livelinecheck.amian.tech robots.txt
+# All web crawlers are welcome to index LiveLineCheck
+
+User-agent: *
+Allow: /
+
+# Exclude print view layout system routes if you ever decide to separate them by URLs
+Disallow: /print
+
+# Link your sitemap asset location once you deploy to production
+Sitemap: https://ccf-set.amian.tech/sitemap.xml

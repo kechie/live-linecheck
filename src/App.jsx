@@ -140,8 +140,25 @@ export default function App() {
     if (howName) {
       // Sets the physical tab name in Chrome/Firefox/Brave
       document.title = `${howName} | LiveLineCheck`;
-      localStorage.setItem(`stageTech_howName_${selectedDateStr}`, howName);
+      //localStorage.setItem(`stageTech_howName_${selectedDateStr}`, howName);
       //console.log("HOWName val", howName);
+      // 2. Dynamic injection for search engine search queries descriptions
+      let metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          "content",
+          `Live stage blocking map, wireless microphone manifests, and audio routing sheets for ${howName}. Configured on LiveLineCheck.`,
+        );
+      }
+
+      // 3. Dynamically update the Open Graph share card title too!
+      let ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) {
+        ogTitle.setAttribute(
+          "content",
+          `${howName} - Live Production Stage Setup`,
+        );
+      }
     }
   }, [howName, selectedDateStr]);
   // --- DATE SWITCHING LOGIC ---
