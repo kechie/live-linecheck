@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function PrintView({
+  howName,
   selectedDateStr,
   channels,
   instruments,
@@ -61,7 +62,7 @@ export default function PrintView({
       <div className="portrait-section">
         <header className="border-b-2 border-black pb-4 mb-6">
           <h1 className="text-3xl font-bold uppercase tracking-tight">
-            Stage Tech Master Manifest
+            {howName ? `${howName} Technical Manifest` : "Technical Manifest"}
           </h1>
           <p className="text-sm font-semibold mt-1 text-gray-700">
             Production Day: {formatPrintDate(selectedDateStr)}

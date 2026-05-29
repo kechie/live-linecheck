@@ -9,17 +9,6 @@ import SetlistTable from "./components/SetlistTable";
 import EditModal from "./components/EditModal";
 import PrintView from "./components/PrintView";
 
-// --- LOCAL STORAGE HELPER FUNCTION ---
-const loadSavedData = (storageKey, fallbackData) => {
-  try {
-    const saved = localStorage.getItem(storageKey);
-    return saved ? JSON.parse(saved) : fallbackData;
-  } catch (error) {
-    console.error(`Error loading ${storageKey} from local storage`, error);
-    return fallbackData;
-  }
-};
-
 const getTodayString = () => {
   return new Date().toISOString().split("T")[0];
 };
@@ -28,24 +17,11 @@ export default function App() {
   const initialDate = getTodayString();
   const [selectedDateStr, setSelectedDateStr] = useState(initialDate);
 
-  // Global State (Dynamically initialized using the current date in the storage key!)
-  // const [channels, setChannels] = useState(() =>
-  //   loadSavedData(`stageTech_channels_${initialDate}`, INITIAL_CHANNELS),
-  // );
-  // const [staff, setStaff] = useState(() =>
-  //   loadSavedData(`stageTech_staff_${initialDate}`, INITIAL_STAFF),
-  // );
-  // const [instruments, setInstruments] = useState(() =>
-  //   loadSavedData(`stageTech_instruments_${initialDate}`, INITIAL_INSTRUMENTS),
-  // );
-  // const [setlist, setSetlist] = useState(() =>
-  //   loadSavedData(`stageTech_setlist_${initialDate}`, INITIAL_SETLIST),
-  // );
-  // Global States start clean and empty
   const [channels, setChannels] = useState([]);
   const [staff, setStaff] = useState([]);
   const [instruments, setInstruments] = useState([]);
   const [setlist, setSetlist] = useState([]);
+  const [howName, setHowName] = useState("LiveLineCheck");
 
   const stageRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -87,14 +63,19 @@ export default function App() {
       `stageTech_setlist_${selectedDateStr}`,
     );
 
-    // If ANY data exists in LocalStorage for this date, load it instantly
     if (savedChannels || savedStaff || savedInstruments || savedSetlist) {
       setChannels(savedChannels ? JSON.parse(savedChannels) : []);
       setStaff(savedStaff ? JSON.parse(savedStaff) : []);
       setInstruments(savedInstruments ? JSON.parse(savedInstruments) : []);
       setSetlist(savedSetlist ? JSON.parse(savedSetlist) : []);
+
+      // Even if data is found locally, we can safely pull the default template name
+      // to keep the window tab accurately branded
+      fetch("/init_data.json")
+        .then((res) => res.json())
+        .then((fallback) => setHowName(fallback.HOWName || "LiveLineCheck"))
+        .catch(() => setHowName("LiveLineCheck"));
     } else {
-      // If today has completely clean memory, fetch our baseline template JSON file
       fetch("/init_data.json")
         .then((res) => res.json())
         .then((fallback) => {
@@ -102,12 +83,21 @@ export default function App() {
           setStaff(fallback.staff || []);
           setInstruments(fallback.instruments || []);
           setSetlist(fallback.setlist || []);
+          setHowName(fallback.HOWName || "LiveLineCheck");
         })
         .catch((err) =>
           console.error("Error seeding initial template manifest map:", err),
         );
     }
   }, [selectedDateStr]);
+
+  const loadDateData = (newDate) => {
+    setSelectedDateStr(newDate);
+    setChannels([]);
+    setStaff([]);
+    setInstruments([]);
+    setSetlist([]);
+  };
   // --- LOCAL STORAGE "WATCHERS" (useEffect) ---
   // FIXED: Added length guards so empty states don't overwrite memory on reset
   useEffect(() => {
@@ -145,7 +135,15 @@ export default function App() {
       );
     }
   }, [setlist, selectedDateStr]);
-
+  // Watcher to handle window title updates and local storage caching
+  useEffect(() => {
+    if (howName) {
+      // Sets the physical tab name in Chrome/Firefox/Brave
+      document.title = `${howName} | LiveLineCheck`;
+      localStorage.setItem(`stageTech_howName_${selectedDateStr}`, howName);
+      //console.log("HOWName val", howName);
+    }
+  }, [howName, selectedDateStr]);
   // --- DATE SWITCHING LOGIC ---
   // const loadDateData = (newDate) => {
   //   setSelectedDateStr(newDate);
@@ -160,14 +158,14 @@ export default function App() {
   //   setSetlist(loadSavedData(`stageTech_setlist_${newDate}`, INITIAL_SETLIST));
   // };
   // --- DATE SWITCHER CORRECTION ---
-  const loadDateData = (newDate) => {
-    setSelectedDateStr(newDate);
-    // State arrays get wiped clean momentarily; the primary lifecycle watcher hook above handles re-seeding
-    setChannels([]);
-    setStaff([]);
-    setInstruments([]);
-    setSetlist([]);
-  };
+  // const loadDateData = (newDate) => {
+  //   setSelectedDateStr(newDate);
+  //   // State arrays get wiped clean momentarily; the primary lifecycle watcher hook above handles re-seeding
+  //   setChannels([]);
+  //   setStaff([]);
+  //   setInstruments([]);
+  //   setSetlist([]);
+  // };
   // --- EXPORT / IMPORT LOGIC ---
   const handleExportShow = () => {
     const showData = { channels, staff, instruments, setlist };
@@ -225,25 +223,17 @@ export default function App() {
   const handleResetDay = () => {
     if (
       window.confirm(
-        `Are you sure you want to wipe all data for ${selectedDateStr}? This will reset today back to the defaults.`,
+        `Are you sure you want to wipe data for ${selectedDateStr}?`,
       )
     ) {
-      // setChannels(INITIAL_CHANNELS);
-      // setStaff(INITIAL_STAFF);
-      // setInstruments(INITIAL_INSTRUMENTS);
-      // setSetlist(INITIAL_SETLIST);
-
-      // Clear out the specific keys for this day from the browser
       localStorage.removeItem(`stageTech_channels_${selectedDateStr}`);
       localStorage.removeItem(`stageTech_staff_${selectedDateStr}`);
       localStorage.removeItem(`stageTech_instruments_${selectedDateStr}`);
       localStorage.removeItem(`stageTech_setlist_${selectedDateStr}`);
 
-      // Force reload the dashboard's storage cycle lifecycle hooks
       loadDateData(selectedDateStr);
     }
   };
-
   // Drag Handlers
   const handlePerformerDragEnd = (id, info, currentLeftPct, currentTopPct) => {
     if (!stageRef.current) return;
@@ -429,6 +419,7 @@ export default function App() {
   if (isPrintMode) {
     return (
       <PrintView
+        howName={howName}
         selectedDateStr={selectedDateStr}
         channels={channels}
         instruments={instruments}
@@ -453,8 +444,8 @@ export default function App() {
       {/* HEADER */}
       <header className="mb-6 border-b border-zinc-800 pb-4 flex flex-col md:flex-row justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black uppercase text-red-500">
-            A1 Master Console
+          <h1 className="text-2xl font-black uppercase text-red-500 tracking-wide">
+            {howName || "LiveLineCheck"} A1 / Music Director Console
           </h1>
           <p className="text-sm text-zinc-400">
             Manage show assets below.{" "}
